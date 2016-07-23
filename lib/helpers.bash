@@ -170,7 +170,7 @@ _bash-it-describe ()
         else
             enabled=' '
         fi
-        printf "%-20s%-10s%s\n" "$(basename $f | cut -d'.' -f1)" "  [$enabled]" "$(cat $f | metafor about-$file_type)"
+        printf "%-20s%-10s%s\n" "$(basename $f | cut -d'.' -f1)" "  [$enabled]" "$($(which cat) $f | metafor about-$file_type)"
     done
     printf '\n%s\n' "to enable $preposition $file_type, do:"
     printf '%s\n' "$ bash-it enable $file_type  <$file_type name> [$file_type name]... -or- $ bash-it enable $file_type all"
@@ -352,7 +352,7 @@ _help-aliases()
                 alias_path="available/$1.aliases.bash"
             ;;
         esac
-        cat $BASH_IT/aliases/$alias_path | metafor alias | sed "s/$/'/"
+        $(which cat) $BASH_IT/aliases/$alias_path | metafor alias | sed "s/$/'/"
     else
         typeset f
         for f in $BASH_IT/aliases/enabled/*
@@ -368,7 +368,7 @@ _help-list-aliases ()
     typeset file=$(basename $1)
     printf '\n\n%s:\n' "${file%%.*}"
     # metafor() strips trailing quotes, restore them with sed..
-    cat $1 | metafor alias | sed "s/$/'/"
+    $(which cat) $1 | metafor alias | sed "s/$/'/"
 }
 
 _help-plugins()
@@ -394,10 +394,10 @@ _help-plugins()
     printf '\r%s\n' '                              '
     typeset group
     typeset gfile
-    for gfile in $(cat $grouplist | sort | uniq)
+    for gfile in $($(which cat) $grouplist | sort | uniq)
     do
         printf '%s\n' "${gfile##*.}:"
-        cat $gfile
+        $(which cat) $gfile
         printf '\n'
         rm $gfile 2> /dev/null
     done | less
@@ -422,7 +422,7 @@ all_groups ()
     do
         typeset -f $func | metafor group >> $file
     done
-    cat $file | sort | uniq
+    $(which cat) $file | sort | uniq
     rm $file
 }
 
