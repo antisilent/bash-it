@@ -352,7 +352,8 @@ _help-aliases()
                 alias_path="available/$1.aliases.bash"
             ;;
         esac
-        $(which cat) $BASH_IT/aliases/$alias_path | metafor alias | sed "s/$/'/"
+        CAT_BIN=$(which cat)
+        "$CAT_BIN" $BASH_IT/aliases/$alias_path | metafor alias | sed "s/$/'/"
     else
         typeset f
         for f in $BASH_IT/aliases/enabled/*
@@ -365,16 +366,19 @@ _help-aliases()
 
 _help-list-aliases ()
 {
+    CAT_BIN=$(which cat)
     typeset file=$(basename $1)
     printf '\n\n%s:\n' "${file%%.*}"
     # metafor() strips trailing quotes, restore them with sed..
-    $(which cat) $1 | metafor alias | sed "s/$/'/"
+    "$CAT_BIN" $1 | metafor alias | sed "s/$/'/"
 }
 
 _help-plugins()
 {
     _about 'summarize all functions defined by enabled bash-it plugins'
     _group 'lib'
+
+    CAT_BIN=$(which cat)
 
     # display a brief progress message...
     printf '%s' 'please wait, building help...'
@@ -397,7 +401,7 @@ _help-plugins()
     for gfile in $($(which cat) $grouplist | sort | uniq)
     do
         printf '%s\n' "${gfile##*.}:"
-        $(which cat) $gfile
+        "$CAT_BIN" $gfile
         printf '\n'
         rm $gfile 2> /dev/null
     done | less
@@ -416,13 +420,15 @@ all_groups ()
     about 'displays all unique metadata groups'
     group 'lib'
 
+    CAT_BIN=$(which cat)
+
     typeset func
     typeset file=$(mktemp /tmp/composure.XXXX)
     for func in $(typeset_functions)
     do
         typeset -f $func | metafor group >> $file
     done
-    $(which cat) $file | sort | uniq
+    "$CAT_BIN" $file | sort | uniq
     rm $file
 }
 
