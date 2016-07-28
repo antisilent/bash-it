@@ -98,7 +98,7 @@ function prevcurl() {
 # Make this backwards compatible
 alias pcurl='prevcurl'
 
-command -v foo >/dev/null 2>&1 || {
+command -v watch >/dev/null 2>&1 || {
   function watch () {
     about 'imitate basic Linux watch functionality'
     param '1: command to watch'
