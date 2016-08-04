@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 
 export CLICOLOR=1
-export LSCOLORS=gxBxhxDxfxfggxgxefhchx
-
-export GREP_OPTIONS='--color=auto'
+export GREP_COLOR='0;45;37'
+export LSCOLORS=exgxdhdhfxDhDhhbhdhcae
 
 safe_term=${TERM//[^[:alnum:]]/?}
 match_lhs=""
@@ -18,10 +17,10 @@ if [[ $'\n'${match_lhs} == *$'\n'"TERM "${safe_term}* ]] ; then
     # we have colors :-)
     # Enable colors for ls, etc. Prefer ~/.dir_colors
     if type -P dircolors >/dev/null ; then
-        if [[ -f $BASH_IT/themes/antisilent/DIR_COLORS ]] ; then
-            eval $(dircolors -b $BASH_IT/themes/antisilent/DIR_COLORS)
-        elif [[ -f ~/.dir_colors ]] ; then
+        if [[ -f ~/.dir_colors ]] ; then
             eval $(dircolors -b ~/.dir_colors)
+        elif [[ -f $BASH_IT/themes/antisilent/DIR_COLORS ]] ; then
+            eval $(dircolors -b $BASH_IT/themes/antisilent/DIR_COLORS)
         elif [[ -f /etc/DIR_COLORS ]] ; then
             eval $(dircolors -b /etc/DIR_COLORS)
         fi
