@@ -7,25 +7,35 @@ export LSCOLORS=exgxdhdhfxDhDhhbhdhcae
 safe_term=${TERM//[^[:alnum:]]/?}
 match_lhs=""
 
-[[ -f ~/.dir_colors ]] && match_lhs="${match_lhs}$(<~/.dir_colors)"
-[[ -f /etc/DIR_COLORS ]] && match_lhs="${match_lhs}$(</etc/DIR_COLORS)"
-[[ -z ${match_lhs} ]] \
-    && type -P dircolors >/dev/null \
-    && match_lhs=$(dircolors --print-database)
-
-if [[ $'\n'${match_lhs} == *$'\n'"TERM "${safe_term}* ]] ; then
-    # we have colors :-)
-    # Enable colors for ls, etc. Prefer ~/.dir_colors
-    if type -P dircolors >/dev/null ; then
-        if [[ -f ~/.dir_colors ]] ; then
-            eval $(dircolors -b ~/.dir_colors)
-        elif [[ -f $BASH_IT/themes/antisilent/DIR_COLORS ]] ; then
-            eval $(dircolors -b $BASH_IT/themes/antisilent/DIR_COLORS)
-        elif [[ -f /etc/DIR_COLORS ]] ; then
-            eval $(dircolors -b /etc/DIR_COLORS)
-        fi
+if type -P dircolors >/dev/null ; then
+    if [[ -f ~/.dir_colors ]] ; then
+        eval $(dircolors -b ~/.dir_colors)
+    elif [[ -f $BASH_IT/themes/antisilent/DIR_COLORS ]] ; then
+        eval $(dircolors -b $BASH_IT/themes/antisilent/DIR_COLORS)
+    elif [[ -f /etc/DIR_COLORS ]] ; then
+        eval $(dircolors -b /etc/DIR_COLORS)
     fi
 fi
+
+# [[ -f ~/.dir_colors ]] && match_lhs="${match_lhs}$(<~/.dir_colors)"
+# [[ -f /etc/DIR_COLORS ]] && match_lhs="${match_lhs}$(</etc/DIR_COLORS)"
+# [[ -z ${match_lhs} ]] \
+#     && type -P dircolors >/dev/null \
+#     && match_lhs=$(dircolors --print-database)
+
+# if [[ $'\n'${match_lhs} == *$'\n'"TERM "${safe_term}* ]] ; then
+#     # we have colors :-)
+#     # Enable colors for ls, etc. Prefer ~/.dir_colors
+#     if type -P dircolors >/dev/null ; then
+#         if [[ -f ~/.dir_colors ]] ; then
+#             eval $(dircolors -b ~/.dir_colors)
+#         elif [[ -f $BASH_IT/themes/antisilent/DIR_COLORS ]] ; then
+#             eval $(dircolors -b $BASH_IT/themes/antisilent/DIR_COLORS)
+#         elif [[ -f /etc/DIR_COLORS ]] ; then
+#             eval $(dircolors -b /etc/DIR_COLORS)
+#         fi
+#     fi
+# fi
 
 _UTOPLEFT="\342\224\214"              # ┌
 _UBAR="\342\224\200"                  # ─
