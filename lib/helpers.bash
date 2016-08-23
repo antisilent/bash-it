@@ -243,6 +243,10 @@ _disable-thing ()
         rm $BASH_IT/$subdirectory/enabled/$(basename $plugin)
     fi
 
+    if [ -n "$BASH_IT_AUTOMATIC_RELOAD_AFTER_CONFIG_CHANGE" ]; then
+        exec ${0/-/}
+    fi
+
     printf '%s\n' "$file_entity disabled."
 }
 
@@ -319,6 +323,10 @@ _enable-thing ()
         mkdir -p $BASH_IT/$subdirectory/enabled
 
         ln -s ../available/$plugin $BASH_IT/$subdirectory/enabled/$plugin
+    fi
+
+    if [ -n "$BASH_IT_AUTOMATIC_RELOAD_AFTER_CONFIG_CHANGE" ]; then
+        exec ${0/-/}
     fi
 
     printf '%s\n' "$file_entity enabled."
@@ -426,7 +434,7 @@ if ! type pathmunge > /dev/null 2>&1
 then
   function pathmunge () {
     about 'prevent duplicate directories in you PATH variable'
-    group 'lib'
+    group 'helpers'
     example 'pathmunge /path/to/dir is equivalent to PATH=/path/to/dir:$PATH'
     example 'pathmunge /path/to/dir after is equivalent to PATH=$PATH:/path/to/dir'
 
