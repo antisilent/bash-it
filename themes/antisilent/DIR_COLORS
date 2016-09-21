@@ -124,7 +124,7 @@ SETGID 00;43;37
 # file with capability
 CAPABILITY 00;30;41
 # dir that is sticky and other-writable (+t,o+w)
-STICKY_OTHER_WRITABLE 42;37
+STICKY_OTHER_WRITABLE 42;30
 # dir that is other-writable (o+w) and not sticky
 OTHER_WRITABLE 07;34
 # dir with the sticky bit set (+t) and not other-writable
