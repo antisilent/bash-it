@@ -46,23 +46,25 @@ _URBRACK="\135"                       # ]
 
 _PROMPT_CMD="[$]"
 
+if [ -z ${PROMPT_COLOR+x} ]; then
+    PROMPT_COLOR=$blue
+fi
+
 SCM_THEME_PROMPT_DIRTY=" ${red}✗"
 SCM_THEME_PROMPT_CLEAN=" ${green}✓"
-SCM_THEME_PROMPT_PREFIX="${_UBAR}[${blue}"
+SCM_THEME_PROMPT_PREFIX="${_UBAR}[${PROMPT_COLOR}"
 SCM_THEME_PROMPT_SUFFIX="${white}]"
 
 GIT_THEME_PROMPT_DIRTY=" ${red}✗"
 GIT_THEME_PROMPT_CLEAN=" ${green}✓"
-GIT_THEME_PROMPT_PREFIX="${_UBAR}[${blue}"
+GIT_THEME_PROMPT_PREFIX="${_UBAR}[${PROMPT_COLOR}"
 GIT_THEME_PROMPT_SUFFIX="${white}]"
 
 RVM_THEME_PROMPT_PREFIX="|"
 RVM_THEME_PROMPT_SUFFIX="|"
 
-
-
 function prompt_command() {
-    PS1="\n${white}${_UTOPLEFT}${_ULBRACK}$(if [[ ${EUID} == 0 ]]; then echo ${red}; else echo ${blue}; fi)\u@\h${white}${_URBRACK}$(scm_prompt_info)\n${_URIGHTT}${_ULBRACK}${green}\@ \d${white}${_URBRACK}${_UBAR}${_ULBRACK}${green}\$(ls -1 | wc -l | sed 's: ::g') files, \$(ls -lah | grep -m 1 total | sed 's/total //')b${white}${_URBRACK}\n${_UBOTTOMLEFT}${_ULBRACK}${yellow}\w${white}${_URBRACK}\n[$]${reset_color} "
+    PS1="\n${white}${_UTOPLEFT}${_ULBRACK}$(if [[ ${EUID} == 0 ]]; then echo ${red}; else echo ${PROMPT_COLOR}; fi)\u@\h${white}${_URBRACK}$(scm_prompt_info)\n${_URIGHTT}${_ULBRACK}${green}\@ \d${white}${_URBRACK}${_UBAR}${_ULBRACK}${green}\$(ls -1 | wc -l | sed 's: ::g') files, \$(ls -lah | grep -m 1 total | sed 's/total //')b${white}${_URBRACK}\n${_UBOTTOMLEFT}${_ULBRACK}${yellow}\w${white}${_URBRACK}\n[$]${reset_color} "
     PS2="> "
     PS3="+ "
     PS4="- "
