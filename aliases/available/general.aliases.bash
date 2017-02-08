@@ -18,8 +18,6 @@ alias l1='ls -1'
 
 alias _="sudo"
 
-<<<<<<< HEAD
-=======
 # colored grep
 # Need to check an existing file for a pattern that will be found to ensure
 # that the check works when on an OS that supports the color option
@@ -29,7 +27,6 @@ then
   export GREP_COLOR='1;33'
 fi
 
->>>>>>> master
 which gshuf &> /dev/null
 if [ $? -eq 0 ]
 then
